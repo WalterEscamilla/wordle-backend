@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "es6",    
+    "module": "es6",
+    "rootDir": "./src",                                  
+    "outDir": "./dist",                                   
+    "esModuleInterop": true,                            
+    "forceConsistentCasingInFileNames": true,          
+    "skipLibCheck": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "moduleResolution": "node",
+                    
+  },
+  "ts-node": {
+    // these options are overrides used only by ts-node
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}

@@ -1,0 +1,11 @@
+{ 
+    "watch": ["src"],
+    "ext": ".ts,.js",
+    "exec": "ts-node --files ./src/index.ts",     
+  "verbose": true,
+    "ignore": ["migrations/*.js",  "*.txt", "*.test.js", "**/fixtures/**", "utilities/get-words.js"],
+    "execMap": {
+      "rb": "ruby",
+      "pde": "processing --sketch={{pwd}} --run"
+    }
+  }
