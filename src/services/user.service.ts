@@ -122,7 +122,7 @@ const userRepository = AppDataSource.getRepository(User);
   }
  
     const getTopTenUsersWithMostWins = async (): Promise<User[]> => {
-      const users = AppDataSource.query(`SELECT "user"."id", "user"."firstName", count("game"."id") as wins
+      const users = await AppDataSource.query(`SELECT "user"."id", "user"."firstName", count("game"."id") as wins
       FROM "user" "user"
       LEFT JOIN "game" "game" ON "game"."userId"="user"."id" 
       AND ("game"."deletedAt" IS NULL) WHERE ( "game"."win" = TRUE ) 
@@ -138,6 +138,7 @@ const userRepository = AppDataSource.getRepository(User);
       //   .take(10)
       //   .select('user.id, user.name, count(game.id) as wins')
       //   .getMany();
+      console.info(users);
   
       return users;
     }

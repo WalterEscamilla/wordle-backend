@@ -18,6 +18,9 @@ class GammeController {
   public intializeRoutes() {
     this.router.post(this.path, this.createGame);
     this.router.post(`${this.path}/word`, this.addWord);
+    this.router.post(`${this.path}/ranking`, this.ranking);
+
+    
 
 
   }
@@ -80,6 +83,15 @@ class GammeController {
 
    }
 
+  }
+  ranking =async  (request: Request, response: Response) => {
+    try {
+      const words =await  wordService.getMostGuessedWords();
+      console.info(words);
+      return ApiResponse.result(response, words, httpStatusCodes.OK);
+    } catch (e) {
+      return ApiResponse.error(response, httpStatusCodes.BAD_REQUEST, 'Something went wrong');
+    }
   }
   compareWords(userWord, selectedWord) {
     let response = [];

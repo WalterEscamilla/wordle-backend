@@ -77,7 +77,8 @@ class UsersController {
 
   ranking =async  (request: Request, response: Response) => {
     try {
-      const users = userService.getTopTenUsersWithMostWins();
+      const users =await  userService.getTopTenUsersWithMostWins();
+      console.info(users);
       return ApiResponse.result(response, users, httpStatusCodes.OK);
     } catch (e) {
       return ApiResponse.error(response, httpStatusCodes.BAD_REQUEST, 'Something went wrong');

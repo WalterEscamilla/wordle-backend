@@ -57,10 +57,16 @@ and finally `npm run dev`
         	route: /users/ranking
         	method: post
         	bodyJson: {}
+6. 
+
+    get most words guesss, 
+        	route: /games/ranking
+        	method: post
+        	bodyJson: {}
 
 TODO
 
  1. insert in game details. done, validate attemtps
  2. get users with more games win, done
- 3. get words most used
+ 3. get words most used, done
  4. add testing
