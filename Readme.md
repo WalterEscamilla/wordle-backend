@@ -51,7 +51,7 @@ and finally `npm run dev`
 
 TODO
 
- 1. insert in game details
+ 1. insert in game details. done, validate attemtps
  2. get users with more games wind
  3. get words most used
  4.add testing

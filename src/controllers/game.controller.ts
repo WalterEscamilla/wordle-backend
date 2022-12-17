@@ -4,7 +4,7 @@ import wordService from '../services/word.service'
 import constants from '../constants';
 import ApiResponse from '../utilities/api-response';
 import gameService from '../services/game.service';
-
+import gameDetailService from '../services/game-detail.service';
 class GammeController {
 
   private path = '/game';
@@ -41,25 +41,44 @@ class GammeController {
   }
 
   addWord = async (request, response: Response) => {
+   try {
     const params = {
       gameId: request.body.gameId,
       userWord: request.body.userWord,
-      points: 0
+      points: 0,
     };
     const game = await gameService.getGame(params.gameId);
     let result: any  = game;
-    if(params.userWord === game.word.name) {
-      await gameService.updateGame(params.gameId, { attempts: game.attempts+1, win: true})
+    const attempts = game.attempts+1;
+    if(attempts <= constants.APPLICATION.maxAttempts )
+    {
+      if(params.userWord === game.word.name) {
+        await gameService.updateGame(params.gameId, { attempts, win: true})
+      }
+      else {
+        const compare = this.compareWords(params.userWord, game.word.name)
+        params.points = compare.points;
+        result = compare.response;
+        await gameService.updateGame(params.gameId, { attempts: game.attempts+1, win: false})
+        await gameDetailService.create(params, game);
+        
+      }
+      console.info(game)
+      return ApiResponse.result(response, result, httpStatusCodes.OK);
     }
     else {
-      const compare = this.compareWords(params.userWord, game.word.name)
-      result = compare.response;
-      await gameService.updateGame(params.gameId, { attempts: game.attempts+1, win: false})
+
+      console.info(game)
+      return ApiResponse.error(response, httpStatusCodes.ACCEPTED, 'max attempts for this game');
     }
+    
+   
+    
+   } catch (error) {
+    console.error(error.message)
+    return ApiResponse.error(response, httpStatusCodes.BAD_REQUEST, 'Something went wrong');
 
-
-    console.info(game)
-    return ApiResponse.result(response, result, httpStatusCodes.OK);
+   }
 
   }
   compareWords(userWord, selectedWord) {
@@ -93,34 +112,6 @@ class GammeController {
  
 }
 
-
-
-
-const selectedWords = new Set();
-
-function selectWord() {
-  // Selecciona una palabra de cinco letras del diccionario
-  let word = selectFiveLetterWordFromDictionary();
-
-  // Verifica si la palabra ya ha sido seleccionada
-  while (selectedWords.has(word)) {
-    // Si la palabra ya ha sido seleccionada, selecciona otra palabra
-    word = selectFiveLetterWordFromDictionary();
-  }
-
-  // Agrega la palabra a la lista de palabras seleccionadas
-  selectedWords.add(word);
-
-  // Devuelve la palabra seleccionada
-  return word;
-}
-
-// Ejecuta la función de selección de palabra cada cinco minutos
-setInterval(selectWord, 1000 * 60 * 5);
-
-function selectFiveLetterWordFromDictionary() {
-    throw new Error("Function not implemented.");
-}
 
 
 export default GammeController;

@@ -5,6 +5,8 @@ export default {
     basePath,
   },
   wordLengthLimit : 5,
+  maxAttempts: 5,
+  maxTimeLifeGame:300, //seconds 
   timers: {
     userCookieExpiry: '720h',
   },
