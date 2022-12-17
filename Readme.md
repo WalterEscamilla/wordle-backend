@@ -48,19 +48,10 @@ and finally `npm run dev`
         	route: /games/word
         	method: posts
         	bodyJson: {"gameId": 1, "userWord": "catos"}
-			
-			
-			
-5. 
-
-    get 10 user with mos winds, 
-        	route: /users/ranking
-        	method: post
-        	bodyJson: {}
 
 TODO
 
  1. insert in game details. done, validate attemtps
- 2. get users with more games win, done
+ 2. get users with more games wind
  3. get words most used
- 4. add testing
+ 4.add testing
