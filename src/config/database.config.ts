@@ -14,7 +14,7 @@ const databaseConfig: DataSourceOptions = {
   entities: ['**/**.entity.ts'],
   subscribers: [],
   migrations: ['src/migrations/*.ts'],
-  migrationsRun: true
+  migrationsRun: false
 };
 
 export default databaseConfig;

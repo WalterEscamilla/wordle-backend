@@ -29,6 +29,8 @@ class UsersController {
     this.router.get(this.path, this.getAllUsers);
     this.router.post(`${this.path}/register`, this.createUser);
     this.router.post(`${this.path}/login`, this.login);
+    this.router.post(`${this.path}/ranking`, this.ranking);
+
 
   }
  
@@ -69,6 +71,15 @@ class UsersController {
       if (e instanceof StringError) {
         return ApiResponse.error(response, httpStatusCodes.BAD_REQUEST, e.message);
       }
+      return ApiResponse.error(response, httpStatusCodes.BAD_REQUEST, 'Something went wrong');
+    }
+  }
+
+  ranking =async  (request: Request, response: Response) => {
+    try {
+      const users = userService.getTopTenUsersWithMostWins();
+      return ApiResponse.result(response, users, httpStatusCodes.OK);
+    } catch (e) {
       return ApiResponse.error(response, httpStatusCodes.BAD_REQUEST, 'Something went wrong');
     }
   }

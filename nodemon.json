@@ -3,7 +3,7 @@
     "ext": ".ts,.js",
     "exec": "ts-node --files ./src/index.ts",     
   "verbose": true,
-    "ignore": ["migrations/*.js",  "*.sql",  "*.txt", "*.test.js", "**/fixtures/**", "utilities/get-words.js"],
+    "ignore": ["migrations/*.*",  "*.sql",  "*.txt", "*.test.js", "**/fixtures/**", "utilities/get-words.js"],
     "execMap": {
       "rb": "ruby",
       "pde": "processing --sketch={{pwd}} --run"
