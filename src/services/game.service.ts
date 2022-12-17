@@ -11,7 +11,7 @@ const getUserGameStats = async (userId: number): Promise<{ games: number, wins: 
     // jugados por el usuario y el número de juegos ganados
     const [{ games, wins }] = await gameRepository
       .createQueryBuilder('game')
-      .select('count(game.id) as games', 'sum(case when game.win = true then 1 else 0 end) as wins')
+      .select('count(game.id) as games, sum(case when game.win = true then 1 else 0 end) as wins')
       .where('game.userId = :userId', { userId })
       .getRawMany();
   

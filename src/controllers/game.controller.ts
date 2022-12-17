@@ -19,6 +19,8 @@ class GammeController {
     this.router.post(this.path, this.createGame);
     this.router.post(`${this.path}/word`, this.addWord);
     this.router.post(`${this.path}/ranking`, this.ranking);
+    this.router.post(`${this.path}/user-stats`, this.userStats);
+
 
     
 
@@ -89,6 +91,16 @@ class GammeController {
       const words =await  wordService.getMostGuessedWords();
       console.info(words);
       return ApiResponse.result(response, words, httpStatusCodes.OK);
+    } catch (e) {
+      return ApiResponse.error(response, httpStatusCodes.BAD_REQUEST, 'Something went wrong');
+    }
+  }
+  userStats=async  (request, response: Response) => {
+    try {
+      const userId = request.user.id;
+      const stats =await  gameService.getUserGameStats(userId);
+      console.info(stats);
+      return ApiResponse.result(response, stats, httpStatusCodes.OK);
     } catch (e) {
       return ApiResponse.error(response, httpStatusCodes.BAD_REQUEST, 'Something went wrong');
     }
