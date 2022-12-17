@@ -122,19 +122,24 @@ const userRepository = AppDataSource.getRepository(User);
   }
  
     const getTopTenUsersWithMostWins = async (): Promise<User[]> => {
-      // Utiliza el EntityManager para crear una consulta personalizada que obtenga los usuarios
-      // con más juegos ganados, ordenados de manera descendente y limitando el resultado a 10 usuarios
-      const users = await userRepository
-        .createQueryBuilder('user')
-        .innerJoin(Game, 'game', 'game.userId = user.id')
-        .where('game.win = :win', { win: true })
-        .groupBy('user.id')
-        .orderBy('count(game.id)', 'DESC')
-        .take(10)
-        .select('user.id, user.name, count(game.id) as wins')
-        .getMany();
+      const users = AppDataSource.query(`SELECT "user"."id", "user"."firstName", count("game"."id") as wins
+      FROM "user" "user"
+      LEFT JOIN "game" "game" ON "game"."userId"="user"."id" 
+      AND ("game"."deletedAt" IS NULL) WHERE ( "game"."win" = TRUE ) 
+      AND ( "user"."deletedAt" IS NULL ) GROUP BY "user"."id" ORDER BY count("game"."id") desc
+      `)
+      //sql generated is correct but get  typeorm game alias not defined
+      // const users =  userRepository
+      //   .createQueryBuilder('user')
+      //   .innerJoin('user.games', 'game')
+      //   .where('game.win = TRUE')
+      //   .groupBy('user.id')
+      //   .orderBy('count(game.id)', 'DESC')
+      //   .take(10)
+      //   .select('user.id, user.firstName, count(game.id) as wins');
+        
   
-      return users;
+      return await users;
     }
    
   

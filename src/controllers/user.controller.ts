@@ -29,6 +29,8 @@ class UsersController {
     this.router.get(this.path, this.getAllUsers);
     this.router.post(`${this.path}/register`, this.createUser);
     this.router.post(`${this.path}/login`, this.login);
+    this.router.post(`${this.path}/ranking`, this.ranking);
+
 
   }
  
@@ -71,6 +73,20 @@ class UsersController {
       }
       return ApiResponse.error(response, httpStatusCodes.BAD_REQUEST, 'Something went wrong');
     }
+  }
+
+  ranking =async (request: Request, response: Response) => {
+    try {
+      const users = await userService.getTopTenUsersWithMostWins()
+      return ApiResponse.result(response, users, httpStatusCodes.OK);
+
+      
+    } catch (error) {
+      console.error(error)
+      return ApiResponse.error(response, httpStatusCodes.BAD_REQUEST, 'Something went wrong');
+
+    }
+    
   }
 
   generateUserCookie = async (userId: number) => {
