@@ -63,10 +63,13 @@ and finally `npm run dev`
         	route: /games/ranking
         	method: post
         	bodyJson: {}
+7. 
+
+    get users stars, 
+        	route: /games/user-stats
+        	method: post
+        	bodyJson: {}
 
 TODO
 
- 1. insert in game details. done, validate attemtps
- 2. get users with more games win, done
- 3. get words most used, done
  4. add testing
